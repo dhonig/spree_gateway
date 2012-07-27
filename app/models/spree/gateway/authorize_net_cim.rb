@@ -56,6 +56,8 @@ module Spree
       if payment.source.gateway_customer_profile_id.nil?
         profile_hash = create_customer_profile(payment)
         payment.source.update_attributes(:gateway_customer_profile_id => profile_hash[:customer_profile_id], :gateway_payment_profile_id => profile_hash[:customer_payment_profile_id])
+        payment.source.gateway_payment_profile_id=profile_hash[:customer_payment_profile_id]
+        payment.source.save()
       end
     end
 
@@ -64,6 +66,8 @@ module Spree
       if card.gateway_customer_profile_id.nil?
         profile_hash = create_customer_profile(card)
         card.update_attributes(:gateway_customer_profile_id => profile_hash[:customer_profile_id], :gateway_payment_profile_id => profile_hash[:customer_payment_profile_id])
+        payment.source.gateway_payment_profile_id=profile_hash[:customer_payment_profile_id]
+        payment.source.save()
       end
     end
 
